@@ -28,6 +28,8 @@ sys.exit()
 
 
 from flask import Flask
+from flask import render_template
+from flask import jsonify
 from flask.ext.mysqldb import MySQL
 
 
@@ -43,11 +45,17 @@ app.config['MYSQL_PASSWORD'] = '2197832'
 app.config['MYSQL_DB'] = 'sakonwaba'
 
 @app.route('/')
+def main():
+	return render_template("index.html")
 def sakonwaba():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM products")
-    rv = cur.fetchall()
-    return str(rv)
+    cur.execute("SELECT * FROM products")
+    productsResults = [dict(name = row[1])for row in cur.fetchall()]
+
+    return jsonify(productsResults=productsResults)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
+
