@@ -15,3 +15,6 @@ for row in csv_f:
 	products[currentItem] += int(numberSold)
 	
 print products
+PopularProduct = [(value,key)for key,value in products.items()]
+print max(PopularProduct)[1]
+print min(PopularProduct)[1]
